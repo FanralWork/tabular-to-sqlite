@@ -1,20 +1,20 @@
-# Tabular Files to SQLite
+# Импорт Excel, CSV и TXT в SQLite
 
-A Tkinter application that imports Excel, CSV, and delimited text files into SQLite for local inspection and querying.
+Настольное приложение переносит табличные файлы в SQLite для последующего просмотра и поиска.
 
-## Features
+## Возможности
 
-- Imports `.xls`, `.xlsx`, `.csv`, and `.txt` into a SQLite table.
-- Supports column renaming, optional first-row headers, and text encoding and delimiter settings.
-- Processes CSV and TXT in configurable chunks and displays conversion progress.
+- Импортирует `.xls`, `.xlsx`, `.csv` и `.txt`.
+- Позволяет настроить имена столбцов, заголовки, кодировку и разделитель.
+- Читает CSV и TXT порциями заданного размера и показывает ход обработки.
 
-## Stack and architecture
+## Устройство
 
-The Tkinter interface in `gui_app_optimized.py` calls `DataProcessorOptimized` in a background thread. The processor uses pandas with openpyxl or xlrd for Excel reading and writes to SQLite. `helper_windows.py` implements the settings, column mapping, and progress dialogs. `gui_app.py` and `data_processor.py` contain the earlier implementation.
+Интерфейс Tkinter из `gui_app_optimized.py` запускает `DataProcessorOptimized` в фоновом потоке. Процессор читает таблицы через pandas, openpyxl или xlrd и записывает данные в SQLite. В `helper_windows.py` находятся окна настроек, сопоставления столбцов и прогресса. В `gui_app.py` и `data_processor.py` сохранена ранняя реализация.
 
-## Setup
+## Установка и запуск
 
-Use Python with Tkinter installed. This setup was checked with Python 3.14 and the pinned packages in `requirements.txt`.
+Установите Python с Tkinter. Локальные проверки выполнялись с Python 3.14 и версиями пакетов из `requirements.txt`.
 
 ```powershell
 python -m venv .venv
@@ -22,11 +22,9 @@ python -m venv .venv
 .\.venv\Scripts\python.exe gui_app_optimized.py
 ```
 
-## Usage
+Выберите входной файл и укажите новый файл назначения SQLite. При необходимости настройте заголовки, разделитель и столбцы, затем запустите импорт.
 
-Select a format and input file. Set the destination to a new SQLite file. Adjust the header, delimiter, or column mapping if necessary, then start the conversion.
-
-You can also call the processor from Python.
+Процессор можно вызвать и из Python:
 
 ```python
 from data_processor_optimized import DataProcessorOptimized
@@ -39,12 +37,8 @@ processor.convert_file_to_db(
 )
 ```
 
-Run the CSV and TXT header regression tests with `python -m unittest -q test_csv_txt_headers`.
+Для проверки заголовков CSV и TXT выполните `python -m unittest -q test_csv_txt_headers`.
 
-## Status and limitations
+## Ограничения
 
-Excel input is read from the first sheet into memory. Use a new output path to avoid replacing a destination table. The earlier README identified MIT as the license. A standalone license file and rights confirmation for distribution remain pending.
-
-## Кратко для портфолио
-
-Настольная утилита переноса Excel, CSV и TXT в SQLite. Реализованы настройки импорта, порционная обработка текстовых файлов и отображение прогресса.
+Первый лист Excel загружается в память целиком. Чтобы сохранить существующую таблицу, указывайте новый файл назначения. В ранней документации упомянута лицензия MIT. Отдельный файл лицензии требует подтверждения условий распространения.
